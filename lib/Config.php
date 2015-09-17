@@ -17,9 +17,19 @@ class Config {
   const CONFIG_VERSION_OPTION_KEY = 'po_bebop_intercom_version';
 
   /**
-   * Key for wordpress option that contains the plugin configuration version
+   * Key for wordpress option that contains the plugin configuration
    */
   const CONFIG_OPTION_KEY = 'po_bebop_intercom';
+
+  /**
+   * Key for wordpress option that contains the configuration for the Intercom Javascript library
+   */
+  const REMOTE_CONFIG_OPTION_KEY = 'po_bebop_intercom_remote_config';
+
+  /**
+   * Key for wordpress option that contains the expiration time for the remote configuration
+   */
+  const REMOTE_CONFIG_OPTION_EXPIRATION = 21600; // 6 hours
 
   /**
    * This class instance
@@ -36,6 +46,7 @@ class Config {
   protected $env_config_map = [
       'dev_env_enabled'     => 'PO_BEBOP_INTERCOM__DEV_ENV_ENABLED',
       'app_id'              => 'PO_BEBOP_INTERCOM__APP_ID',
+      'remote_config_url'   => 'PO_BEBOP_INTERCOM__REMOTE_CONFIG_URL',
       'dont_send_user_data' => 'PO_BEBOP_INTERCOM__DONT_SEND_USER_DATA',
       'allow_visitors'      => 'PO_BEBOP_INTERCOM__ALLOW_VISITORS'
   ];

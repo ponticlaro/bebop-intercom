@@ -4,7 +4,8 @@
   "description": "WordPress Plugin to integrate Intercom for logged in users",
   "require": {
     "composer/installers": "~1.0",
-    "ponticlaro/bebop-scripts-loader": "dev-master"
+    "ponticlaro/bebop-scripts-loader": "dev-master",
+    "ponticlaro/bebop-http-client": "dev-master"
   },
   "autoload": {
     "psr-4": {

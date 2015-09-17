@@ -3,6 +3,7 @@
 namespace Ponticlaro\Bebop\Intercom;
 
 use Ponticlaro\Bebop\ScriptsLoader\Js;
+use Ponticlaro\Bebop\HttpClient\Client AS HttpClient;
 
 class WordPressPlugin {
 
@@ -86,6 +87,7 @@ class WordPressPlugin {
     {
         delete_option(Config::CONFIG_VERSION_OPTION_KEY);
         delete_option(Config::CONFIG_OPTION_KEY);
+        delete_transient(Config::JS_LIBRARY_CONFIG_OPTION_KEY);
     }
 
     /**
@@ -95,8 +97,17 @@ class WordPressPlugin {
      */
     public function onInit()
     {
+        // Get configuration object
         $config = Config::getInstance();
 
+        // Get remote configuration
+        if ($remote_config = $this->__getRemoteConfiguration()) {
+            foreach ($remote_config as $key => $value) {
+                $config->set($key, $value);
+            }
+        }
+
+        // Enable Intercom widget if we have the desired conditions
         if ($config->get('app_id') && (is_user_logged_in() || $config->get('allow_visitors'))) {
 
             // Get logged in user data
@@ -114,7 +125,7 @@ class WordPressPlugin {
 
             // Add user WordPress data, if enabled
             if (!$config->get('dont_send_user_data')) {
-                $localization_value['user_id'] = $current_user ? $_SERVER['HTTP_HOST'] .'-'. $current_user->ID : null;
+                $localization_value['user_id'] = $current_user ? (getenv('APP_NAME') ?: $_SERVER['HTTP_HOST']) .'-'. $current_user->ID : null;
                 $localization_value['email']   = $current_user ? $current_user->user_email : null;
                 $localization_value['name']    = $current_user ? $current_user->display_name : null;
             }
@@ -131,5 +142,33 @@ class WordPressPlugin {
                ->localize($script_id, $localization_name, $localization_value)
                ->enqueue($script_id);
         }
+    }
+
+    /**
+     * Returns remote configuration for the Intercom Javascript library
+     * 
+     * @return array Associative array with configuration values for the Intercom Javascript library
+     */
+    protected function __getRemoteConfiguration()
+    {
+        // Get configuration object
+        $config = Config::getInstance();
+        
+        // Check if we have the configuration temporarily stored
+        $remote_config = get_transient(Config::REMOTE_CONFIG_OPTION_KEY);
+
+        // Get remote configuration if we have none locally
+        if(!$remote_config && $config->get('remote_config_url')) {
+
+            $response = HttpClient::get($config->get('remote_config_url'));
+            
+            if ($response->getCode() === 200) { 
+
+                $remote_config = $response->getBody();
+                set_transient(Config::REMOTE_CONFIG_OPTION_KEY, $remote_config, Config::REMOTE_CONFIG_OPTION_EXPIRATION);
+            }
+        }
+
+        return $remote_config ? json_decode($remote_config) : [];
     }
 }
