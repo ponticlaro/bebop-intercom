@@ -1,0 +1,15 @@
+{
+  "name": "ponticlaro/bebop-intercom",
+  "type": "wordpress-plugin",
+  "description": "WordPress Plugin to integrate Intercom for logged in users",
+  "require": {
+    "composer/installers": "~1.0",
+    "ponticlaro/bebop-scripts-loader": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ponticlaro\\Bebop\\Intercom\\": "lib/"
+    }
+  },
+  "minimum-stability": "dev"
+}
