@@ -28,6 +28,4 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
 
-require_once __DIR__ .'/vendor/autoload.php';
-
 Ponticlaro\Bebop\Intercom\WordPressPlugin::boot(__FILE__);
