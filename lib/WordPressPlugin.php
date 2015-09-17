@@ -97,7 +97,7 @@ class WordPressPlugin {
     {
         $config = Config::getInstance();
 
-        if ($config->get('app_id') && is_user_logged_in()) {
+        if ($config->get('app_id') && (is_user_logged_in() || $config->get('allow_visitors'))) {
 
             // Get logged in user data
             global $current_user;
@@ -114,7 +114,7 @@ class WordPressPlugin {
 
             // Add user WordPress data, if enabled
             if (!$config->get('dont_send_user_data')) {
-                $localization_value['user_id'] = $_SERVER['HTTP_HOST'] .'-'. $current_user->ID;
+                $localization_value['user_id'] = $current_user ? $_SERVER['HTTP_HOST'] .'-'. $current_user->ID : null;
                 $localization_value['email']   = $current_user ? $current_user->user_email : null;
                 $localization_value['name']    = $current_user ? $current_user->display_name : null;
             }

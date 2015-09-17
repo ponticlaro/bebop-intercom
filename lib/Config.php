@@ -36,7 +36,8 @@ class Config {
   protected $env_config_map = [
       'dev_env_enabled'     => 'PO_BEBOP_INTERCOM__DEV_ENV_ENABLED',
       'app_id'              => 'PO_BEBOP_INTERCOM__APP_ID',
-      'dont_send_user_data' => 'PO_BEBOP_INTERCOM__DONT_SEND_USER_DATA'
+      'dont_send_user_data' => 'PO_BEBOP_INTERCOM__DONT_SEND_USER_DATA',
+      'allow_visitors'      => 'PO_BEBOP_INTERCOM__ALLOW_VISITORS'
   ];
 
   /**
