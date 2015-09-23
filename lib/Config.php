@@ -34,7 +34,7 @@ class Config {
   /**
    * Time to wait before attempting again to get remote configuration
    */
-  const REMOTE_CONFIG_ATTEMPT_INTERVAL = 30; // 10 minutes
+  const REMOTE_CONFIG_ATTEMPT_INTERVAL = 600; // 10 minutes
 
   /**
    * Expiration time for the remote configuration
