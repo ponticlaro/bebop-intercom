@@ -88,6 +88,7 @@ class WordPressPlugin {
         delete_option(Config::CONFIG_VERSION_OPTION_KEY);
         delete_option(Config::CONFIG_OPTION_KEY);
         delete_transient(Config::JS_LIBRARY_CONFIG_OPTION_KEY);
+        delete_option(Config::REMOTE_CONFIG_FAILED_TIMESTAMP_OPTION_KEY);
     }
 
     /**
@@ -160,12 +161,23 @@ class WordPressPlugin {
         // Get remote configuration if we have none locally
         if(!$remote_config && $config->get('remote_config_url')) {
 
-            $response = HttpClient::get($config->get('remote_config_url'));
-            
-            if ($response->getCode() === 200) { 
+            $latest_failure = get_option(Config::REMOTE_CONFIG_FAILED_TIMESTAMP_OPTION_KEY);
 
-                $remote_config = $response->getBody();
-                set_transient(Config::REMOTE_CONFIG_OPTION_KEY, $remote_config, Config::REMOTE_CONFIG_OPTION_EXPIRATION);
+            if (!$latest_failure || time() - $latest_failure > Config::REMOTE_CONFIG_ATTEMPT_INTERVAL) {
+
+                $response = HttpClient::get($config->get('remote_config_url'));
+                
+                if ($response->getCode() === 200) { 
+
+                    $remote_config = $response->getBody();
+                    set_transient(Config::REMOTE_CONFIG_OPTION_KEY, $remote_config, Config::REMOTE_CONFIG_OPTION_EXPIRATION);
+                    delete_option(Config::REMOTE_CONFIG_FAILED_TIMESTAMP_OPTION_KEY);
+                }
+
+                else {
+                    
+                    update_option(Config::REMOTE_CONFIG_FAILED_TIMESTAMP_OPTION_KEY, time());
+                }
             }
         }
 

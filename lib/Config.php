@@ -27,7 +27,17 @@ class Config {
   const REMOTE_CONFIG_OPTION_KEY = 'po_bebop_intercom_remote_config';
 
   /**
-   * Key for wordpress option that contains the expiration time for the remote configuration
+   * Key for wordpress option that flags that it failed to retrieve configuration from remote config URL
+   */
+  const REMOTE_CONFIG_FAILED_TIMESTAMP_OPTION_KEY = 'po_bebop_intercom_remote_config_failed_at';
+
+  /**
+   * Time to wait before attempting again to get remote configuration
+   */
+  const REMOTE_CONFIG_ATTEMPT_INTERVAL = 30; // 10 minutes
+
+  /**
+   * Expiration time for the remote configuration
    */
   const REMOTE_CONFIG_OPTION_EXPIRATION = 21600; // 6 hours
 
