@@ -133,15 +133,20 @@ class WordPressPlugin {
 
             // Register, localize and enqueue plugin script on both front and back-end
             $js = JS::getInstance();
-            $js->getHook('front')
-               ->register($script_id, $script_path)
-               ->localize($script_id, $localization_name, $localization_value)
-               ->enqueue($script_id);
 
             $js->getHook('back')
                ->register($script_id, $script_path)
                ->localize($script_id, $localization_name, $localization_value)
                ->enqueue($script_id);
+
+            // Optionally display Intercom widget on front-end
+            if ($config->get('display_on_front_end')) {
+
+                $js->getHook('front')
+                   ->register($script_id, $script_path)
+                   ->localize($script_id, $localization_name, $localization_value)
+                   ->enqueue($script_id);
+            }
         }
     }
 

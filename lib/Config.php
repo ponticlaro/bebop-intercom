@@ -54,11 +54,12 @@ class Config {
    * @var array
    */
   protected $env_config_map = [
-      'dev_env_enabled'     => 'PO_BEBOP_INTERCOM__DEV_ENV_ENABLED',
-      'app_id'              => 'PO_BEBOP_INTERCOM__APP_ID',
-      'remote_config_url'   => 'PO_BEBOP_INTERCOM__REMOTE_CONFIG_URL',
-      'dont_send_user_data' => 'PO_BEBOP_INTERCOM__DONT_SEND_USER_DATA',
-      'allow_visitors'      => 'PO_BEBOP_INTERCOM__ALLOW_VISITORS'
+      'dev_env_enabled'      => 'PO_BEBOP_INTERCOM__DEV_ENV_ENABLED',
+      'app_id'               => 'PO_BEBOP_INTERCOM__APP_ID',
+      'remote_config_url'    => 'PO_BEBOP_INTERCOM__REMOTE_CONFIG_URL',
+      'dont_send_user_data'  => 'PO_BEBOP_INTERCOM__DONT_SEND_USER_DATA',
+      'allow_visitors'       => 'PO_BEBOP_INTERCOM__ALLOW_VISITORS',
+      'display_on_front_end' => 'PO_BEBOP_INTERCOM__DISPLAY_ON_FRONT_END'
   ];
 
   /**
