@@ -4,13 +4,18 @@
   "description": "WordPress Plugin to integrate Intercom for logged in users",
   "require": {
     "composer/installers": "~1.0",
-    "ponticlaro/bebop-scripts-loader": "dev-master",
-    "ponticlaro/bebop-http-client": "dev-master"
+    "ponticlaro/bebop-scripts-loader": "^1",
+    "ponticlaro/bebop-http-client": "^1"
+  },
+  "require-dev": {
+    "apigen/apigen": "^4"
   },
   "autoload": {
     "psr-4": {
       "Ponticlaro\\Bebop\\Intercom\\": "lib/"
     }
   },
-  "minimum-stability": "dev"
+  "scripts": {
+    "generate-docs": "apigen generate --config ./apigen.yaml"
+  }
 }
